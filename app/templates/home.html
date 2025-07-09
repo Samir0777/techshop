@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>TechStore</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --main-color: #1f3b4d;
+      --accent: #1f5562;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #f4f7fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--main-color), var(--accent));
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      font-size: 28px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .burger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
+    }
+
+    .nav-links {
+      display: flex;
+    }
+
+    .overlay {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        width: 250px;
+        background-color: var(--main-color);
+        flex-direction: column;
+        padding: 60px 20px;
+        transition: right 0.4s ease;
+        z-index: 999;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .burger {
+        display: flex;
+      }
+
+      .overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 998;
+      }
+
+      .overlay.active {
+        display: block;
+      }
+    }
+
+    .banner {
+      background: url('https://images.unsplash.com/photo-1580894908360-18e4b6e7d0c4?auto=format&fit=crop&w=1400&q=80') no-repeat center/cover;
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+      text-align: center;
+      padding: 20px;
+      text-shadow: 0 0 8px rgba(0,0,0,0.7);
+    }
+
+    .section {
+      padding: 60px 10%;
+    }
+
+    .section h2 {
+      font-size: 30px;
+      color: var(--main-color);
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+    }
+
+    .product img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      padding: 10px;
+    }
+
+    .product-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-content h3 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .product-content p {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: auto;
+    }
+
+    .product-content button {
+      background: var(--main-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+
+    .product-content button:hover {
+      background: #122b3a;
+    }
+
+    footer {
+      background: var(--main-color);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    footer p {
+      margin: 8px 0;
+    }
+
+footer .social {
+      margin-top: 20px;
+    }
+
+    footer .social a {
+      color: white;
+      margin: 0 10px;
+      font-size: 18px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    footer .social a:hover {
+      color: #ddd;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <header>
+    <h1>TechStore</h1>
+    <div class="burger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav class="nav-links" id="navLinks">
+      <a href="#">Каталог</a>
+      <a href="#">О нас</a>
+      <a href="#">Контакты</a>
+    </nav>
+  </header>
+
+  <div class="banner">
+    Добро пожаловать в TechStore — магазин техники нового поколения!
+  </div>
+
+  <section class="section">
+    <h2>Наши товары</h2>
+    <div class="products">
+      {% for card in cards %}
+      <div class="product">
+        <img src="{{ card.image.url }}" alt="{{ card.title }}">
+        <div class="product-content">
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.description }}</p>
+          <button>В корзину</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 TechStore — Все права защищены</p>
+    <p>Контакты: +998 95 757 45 55 | info@techstore.uz</p>
+    <div class="social">
+      <a href="https://t.me/bogarbek">Telegram</a> |
+      <a href="#">Instagram</a> |
+      <a href="#">Facebook</a>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('active');
+      document.getElementById('overlay').classList.toggle('active');
+    }
+
+    function closeMenu() {
+      document.getElementById('navLinks').classList.remove('active');
+      document.getElementById('overlay').classList.remove('active');
+    }
+  </script>
+
+</body>
+</html>
