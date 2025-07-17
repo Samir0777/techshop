@@ -9,6 +9,18 @@
       --main-color: #1f3b4d;
       --accent: #1f5562;
       --highlight: #00c7ff;
+      --bg-color: #f4f7fa;
+      --text-color: #333;
+      --card-bg: white;
+    }
+
+    body.dark {
+      --main-color: #0d1a22;
+      --accent: #0c3c47;
+      --highlight: #00c7ff;
+      --bg-color: #1e1e1e;
+      --text-color: #f0f0f0;
+      --card-bg: #2c2c2c;
     }
 
     html {
@@ -23,8 +35,8 @@
     }
 
     body {
-      background: #f4f7fa;
-      color: #333;
+      background: var(--bg-color);
+      color: var(--text-color);
     }
 
     header {
@@ -90,6 +102,22 @@
 
     .nav-links {
       display: flex;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      background: none;
+      border: 2px solid white;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 6px;
+      margin-left: 20px;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
 
     .overlay {
@@ -166,7 +194,7 @@
     }
 
     .product {
-      background: white;
+      background: var(--card-bg);
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       overflow: hidden;
@@ -230,7 +258,7 @@
     .feature {
       flex: 1 1 200px;
       padding: 20px;
-      background: white;
+      background: var(--card-bg);
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
@@ -240,23 +268,37 @@
       color: var(--main-color);
     }
 
-    .reviews {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .review {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      max-width: 300px;
+    .contact-form {
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 600px;
+      margin: 0 auto;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
-    .review p {
-      font-style: italic;
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .contact-form button {
+      background: var(--main-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .contact-form button:hover {
+      background: #122b3a;
     }
 
     footer {
@@ -291,6 +333,33 @@
     #scrollTopBtn:hover {
       background: #0a2c3d;
     }
+    
+    .auth-buttons {
+      position: absolute;
+      top: 100px;   
+      left: 1180px;  
+      display: flex;
+      gap: 20px;
+    }
+    
+    .auth-buttons a {
+      background: var(--highlight);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    
+    .auth-buttons a:hover {
+      background: #00b0e4;
+      transform: translateY(-2px);
+    }
+    
+      
   </style>
 </head>
 <body>
@@ -300,22 +369,27 @@
   <header>
     <h1>TechStore</h1>
     <div class="burger" onclick="toggleMenu()">
-      <div></div>
-      <div></div>
-      <div></div>
+      <div></div><div></div><div></div>
     </div>
     <nav class="nav-links" id="navLinks">
       <a href="#">Каталог</a>
       <a href="#whyus">Почему мы?</a>
-      <a href="#reviews">Отзывы</a>
       <a href="#">Контакты</a>
+      <button class="theme-toggle" onclick="toggleTheme()">Сменить тему</button>
     </nav>
   </header>
 
   <div class="banner">
     Добро пожаловать в TechStore — магазин техники нового поколения!
   </div>
-
+  
+  <div class="auth-buttons">
+    <a href="{% url 'sign_in' %}" class="auth-btn">Войти</a>
+    <a href="{% url 'sign_up' %}" class="auth-btn">Зарегистрироваться</a>
+    
+    
+  </div>
+  
   <section class="section">
     <h2>Наши товары</h2>
     <div class="products">
@@ -350,21 +424,18 @@
     </div>
   </section>
 
-  <section class="section" id="reviews">
-    <h2>Отзывы клиентов</h2>
-    <div class="reviews">
-      <div class="review">
-        <p>«Отличный магазин! Всё пришло быстро и качественно.»</p>
-        <strong>— Алина</strong>
-      </div>
-      <div class="review">
-        <p>«Покупал ноутбук — обслуживание на высоте. Спасибо!»</p>
-        <strong>— Дмитрий</strong>
-      </div>
-      <div class="review">
-        <p>«Рекомендую! Хорошие цены и грамотная поддержка.»</p>
-        <strong>— Наргиза</strong>
-      </div>
+  <section class="section" id="contact">
+    <h2>Есть вопросы?</h2>
+    <p style="text-align:center; margin-bottom: 30px;">
+      Если у вас есть какие-то вопросы, можете обратиться к нам — мы непременно вам ответим.
+    </p>
+    <div class="contact-form">
+      <form>
+        <input type="text" placeholder="Ваше имя" required>
+        <input type="email" placeholder="Ваш Gmail" required>
+        <textarea rows="5" placeholder="Ваш вопрос..." required></textarea>
+        <button type="submit">Отправить</button>
+      </form>
     </div>
   </section>
 
@@ -391,13 +462,17 @@
       document.getElementById('overlay').classList.remove('active');
     }
 
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
     window.onscroll = function () {
       const btn = document.getElementById('scrollTopBtn');
       btn.style.display = window.scrollY > 400 ? "block" : "none";
     };
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
     }
   </script>
 </body>

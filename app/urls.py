@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from django.urls import path
+from . import views
 
-def home(request):
-    return render(request, 'home.html')
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('sign-up/', views.sign_up, name='sign_up'),
+    path('sign-in/', views.sign_in, name='sign_in'),
+    path('sign-out/', views.sign_out, name='sign_out'),
+]
