@@ -27,7 +27,3 @@ def sign_in(request):
     else:
         form = AuthenticationForm()
     return render(request, 'sign_in.html', {'form': form})
-
-def sign_out(request):
-    logout(request)
-    return redirect('home')

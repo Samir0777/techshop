@@ -25,6 +25,7 @@
     body {
       background: #f4f7fa;
       color: #333;
+      overflow-x: hidden;
     }
 
     header {
@@ -95,6 +96,34 @@
     .overlay {
       display: none;
     }
+    .auth-container {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .auth-buttons {
+      display: flex;
+      gap: 20px;
+      position: absolute;
+      top: 20px;
+      right: -130px; 
+    }
+    
+    .auth-link {
+      background-color: var(--main-color);
+      color: white;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+    
+    .auth-link:hover {
+      background-color: var(--highlight);
+    }
+
 
     @media (max-width: 768px) {
       .nav-links {
@@ -132,7 +161,20 @@
       .overlay.active {
         display: block;
       }
-    }
+        .auth-buttons {
+          position: static; 
+          justify-content: flex-end;
+          margin-top: 20px;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+      
+        .auth-buttons button {
+          width: auto;
+          padding: 8px 16px;
+        }
+      }
+      
 
     .banner {
       background: url('https://images.unsplash.com/photo-1580894908360-18e4b6e7d0c4?auto=format&fit=crop&w=1400&q=80') no-repeat center/cover;
@@ -264,7 +306,9 @@
       color: white;
       text-align: center;
       padding: 40px 20px;
+      padding-bottom: 60px; 
     }
+    
 
     footer .social a {
       color: white;
@@ -291,6 +335,7 @@
     #scrollTopBtn:hover {
       background: #0a2c3d;
     }
+
   </style>
 </head>
 <body>
@@ -311,7 +356,12 @@
       <a href="#">Контакты</a>
     </nav>
   </header>
-
+  <div class="auth-container">
+  <div class="auth-buttons">
+    <a href="{% url 'sign_in' %}" class="auth-link">Войти</a>
+    <a href="{% url 'sign_up' %}" class="auth-link">Зарегистрироваться</a>
+  </div>
+</div>
   <div class="banner">
     Добро пожаловать в TechStore — магазин техники нового поколения!
   </div>
